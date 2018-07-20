@@ -8,7 +8,7 @@ let ajaxUrl = CONFIG.server[env] || 'https://debug.url.com'
 
 let instance = axios.create({
   baseURL: ajaxUrl,
-  timeout: 10000
+  timeout: 3000
 })
 
 instance.interceptors.request.use(config => {
@@ -22,21 +22,23 @@ instance.interceptors.request.use(config => {
 })
 
 instance.interceptors.response.use(res => {
-  if (res.status && res.status == 200 && res.data.status == 'error') {
+  let data = res.data || {}
+  if (res.status && res.status == 200 && data.status == 'error') {
     Message.error({
       duration: 3,
-      content: res.data.msg
+      content: data.msg
     })
     return
   }
   return res
 }, err => {
-  if (err.response.status == 504 || err.response.status == 404) {
+  let response = err.response || {}
+  if (response.status == 504 || response.status == 404) {
     Message.error({
       duration: 3,
       content: '服务器被吃了⊙﹏⊙∥'
     })
-  } else if (err.response.status == 403) {
+  } else if (response.status == 403) {
     Message.error({
       duration: 3,
       content: '权限不足,请联系管理员!'
@@ -44,7 +46,7 @@ instance.interceptors.response.use(res => {
   } else {
     Message.error({
       duration: 3,
-      content: data.errorDescription || '出现未知错误，请稍后重试'
+      content: response.errorDescription || '出现未知错误，请稍后重试'
     })
   }
   return Promise.resolve(err);

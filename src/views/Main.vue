@@ -184,7 +184,8 @@
       fullscreenChange(isFullScreen) {
         // console.log(isFullScreen);
       },
-      scrollBarResize() {
+      scrollBarResize: function() {
+      // scrollBarResize() {
         this.$refs.scrollBar.resize();
       }
     },

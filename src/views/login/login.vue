@@ -38,6 +38,7 @@
               <Button size="large"
                       @click="handleSubmit"
                       type="primary"
+                      :loading="showBtnLoading"
                       long>登录
               </Button>
             </FormItem>
@@ -60,6 +61,7 @@
     },
     data () {
       return {
+        showBtnLoading: false,
         form: {
           loginName: 'admin',
           password: '1qaz2wsx',
@@ -77,26 +79,21 @@
       };
     },
     methods: {
-      handleSubmit: _.debounce(function() {
-        this.$refs.loginForm.validate((valid) => {
+      handleSubmit: _.debounce(function () {
+        const self = this;
+        self.$refs.loginForm.validate((valid) => {
           if (valid) {
+            self.showBtnLoading = true;
             Cookies.set('user', this.form.loginName);
             Cookies.set('password', this.form.password);
 
             this.$store.commit('setAvator', 'http://image.xiaomaiketang.com/xm/avatar1520488901594');
-            let param = this.form
+            let param = this.form;
             AXIOS.post('/security/token', param).then((res) => {
-
-            });
-            // AXIOS.post('/security/token', {
-            //   name: 'jack'
-            // }, {
-            //   headers: {
-            //     'Content-Type': 'application/x-www-form-urlencoded'
-            //   }
-            // }).then((res) => {
-            //
-            // });
+              self.showBtnLoading = false
+            }, (err) => {
+              self.showBtnLoading = false
+            })
 
             // if (this.form.loginName === 'iview_admin') {
             //   Cookies.set('access', 0);

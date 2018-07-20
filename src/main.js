@@ -8,6 +8,7 @@ import '@/locale';
 import 'iview/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
+import AXIOS from './global/AXIOS';
 
 moment.locale('zh_cn');
 window.moment = moment;
@@ -15,6 +16,7 @@ window._ = _;
 
 Vue.use(VueI18n);
 Vue.use(iView);
+window.AXIOS = AXIOS
 
 new Vue({
   el: '#app',

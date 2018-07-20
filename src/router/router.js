@@ -66,6 +66,16 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
+{
+        path: '/demo-test',
+        icon: 'key',
+        name: 'demoTest',
+        title: '测试Iview组件',
+        component: Main,
+         children: [
+            { path: 'index', title: '测试Iview组件', name: 'demoTest_index', component: () => import('@/views/demo-test/demoTestPage.vue') }
+        ]
+    },
     {
         path: '/access',
         icon: 'key',

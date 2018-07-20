@@ -129,21 +129,6 @@ export const appRouter = [
     ]
   },
   {
-    path: '/international',
-    icon: 'earth',
-    title: {i18n: 'international'},
-    name: 'international',
-    component: Main,
-    children: [
-      {
-        path: 'index',
-        title: {i18n: 'international'},
-        name: 'international_index',
-        component: () => import('@/views/international/international.vue')
-      }
-    ]
-  },
-  {
     path: '/component',
     icon: 'social-buffer',
     name: 'component',

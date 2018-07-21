@@ -9,6 +9,7 @@ import 'iview/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
 import AXIOS from './global/AXIOS';
+import IviewSet from './global/IviewSet';
 
 window.moment = moment;
 window._ = _;
@@ -35,6 +36,7 @@ new Vue({
     this.$store.commit('updateMenulist');
     // iview-admin检查更新
     util.checkUpdate(this);
+    IviewSet.init(this)
   },
   created () {
     let tagsList = [];

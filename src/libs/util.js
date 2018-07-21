@@ -5,7 +5,7 @@ import packjson from '../../package.json';
 
 let util = {};
 util.title = function (title, vm) {
-  let iTitle = 'iView admin';
+  let iTitle = '和掌柜后台';
   if (title) {
     iTitle += ' - ' + (title.i18n ? vm.$t(title.i18n) : title);
   }

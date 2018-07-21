@@ -15,7 +15,6 @@ instance.interceptors.request.use(config => {
   return config
 }, err => {
   Message.error({
-    duration: 3,
     content: '网络有点卡，请稍后重试!'
   })
   return Promise.resolve(err)
@@ -25,7 +24,6 @@ instance.interceptors.response.use(res => {
   let data = res.data || {}
   if (res.status && res.status == 200 && data.status == 'error') {
     Message.error({
-      duration: 3,
       content: data.msg
     })
     return
@@ -35,17 +33,14 @@ instance.interceptors.response.use(res => {
   let response = err.response || {}
   if (response.status == 504 || response.status == 404) {
     Message.error({
-      duration: 3,
       content: '服务器被吃了⊙﹏⊙∥'
     })
   } else if (response.status == 403) {
     Message.error({
-      duration: 3,
       content: '权限不足,请联系管理员!'
     })
   } else {
     Message.error({
-      duration: 3,
       content: response.errorDescription || '出现未知错误，请稍后重试'
     })
   }

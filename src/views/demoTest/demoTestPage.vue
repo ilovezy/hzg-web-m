@@ -135,7 +135,22 @@
 
     <Row>
       <Col :lg="24">
-        <Table width="400" :height="300" stripe :columns="columns1" :data="data1"></Table>
+        <h1>pageNo: {{pageNo}}</h1>
+        <Table size="small" :loading="loadingTable" :height="300" stripe :columns="columns1" :data="data1">
+          <Page slot="footer"
+                style="float: right; margin-top: 7px; margin-right: 15px"
+                :total="31"
+                @on-change="changePage"
+                show-total></Page>
+        </Table>
+      </Col>
+
+      <Col :lg="24">
+        <Select multiple v-model="model1" style="width:200px">
+          <Option v-for="item in cityList"
+                  :value="item.value"
+                  :key="item.value">{{ item.label }}</Option>
+        </Select>
       </Col>
     </Row>
 
@@ -148,16 +163,44 @@
     components: {},
     data () {
       return {
+        loadingTable: true,
+        pageNo: 0,
         dropdownValue: '下拉菜单',
         currentStep: 0,
         value1: 1,
         showModal1: false,
-
+        cityList: [
+          {
+            value: 'New York',
+            label: 'New York'
+          },
+          {
+            value: 'London',
+            label: 'London'
+          },
+          {
+            value: 'Sydney',
+            label: 'Sydney'
+          },
+          {
+            value: 'Ottawa',
+            label: 'Ottawa'
+          },
+          {
+            value: 'Paris',
+            label: 'Paris'
+          },
+          {
+            value: 'Canberra',
+            label: 'Canberra'
+          }
+        ],
+        model1: '',
         columns1: [
           {
             title: 'Name',
             key: 'name',
-            width: 100,
+            width: 200,
             fixed: 'left'
           },
           {
@@ -166,7 +209,8 @@
           },
           {
             title: 'Address',
-            key: 'address'
+            key: 'address',
+            ellipsis: true
           },
           {
             title: 'Date',
@@ -235,6 +279,7 @@
             date: '2016-10-04'
           }
         ],
+        // data1: [],
 
         toDoList: [
           {
@@ -260,10 +305,16 @@
     computed: {},
 
     created () {
+      setTimeout(() => {
+        this.loadingTable = false;
+      }, 3000);
       this.$Message.success('成功切换到这里来了亲');
     },
 
     methods: {
+      changePage (pageNo) {
+        this.pageNo = pageNo;
+      },
       next () {
         this.currentStep++;
       },

@@ -3,8 +3,8 @@ const demo = {
     count: 0
   },
   mutations: {
-    increment (state, payload = 1) {
-      // debugger
+    increment (state, payload) {
+      payload = _.isNumber(payload) ? payload : 1
       state.count += payload;
     },
 

@@ -40,6 +40,12 @@
         <Button type="error" @click="resetBadge">
           reset badge
         </Button>
+        <Button type="error" @click="increment">
+          increment
+        </Button>
+        <Button type="error" @click="add">
+          add
+        </Button>
 
         <Modal
             v-model="showModal1"
@@ -195,6 +201,8 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex';
+
   export default {
     name: 'demoTestPage',
     components: {},
@@ -218,22 +226,6 @@
             value: 'London',
             label: 'London'
           },
-          {
-            value: 'Sydney',
-            label: 'Sydney'
-          },
-          {
-            value: 'Ottawa',
-            label: 'Ottawa'
-          },
-          {
-            value: 'Paris',
-            label: 'Paris'
-          },
-          {
-            value: 'Canberra',
-            label: 'Canberra'
-          }
         ],
         model1: '',
         columns1: [
@@ -281,60 +273,6 @@
             age: 18,
             address: 'New York No. 1 Lake Park',
             date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
           }
         ],
         // data1: [],
@@ -362,7 +300,7 @@
 
     computed: {
       badgeNum () {
-        console.log(this.$store.state)
+        console.log(this.$store.state);
         return this.$store.state.demo.count;
       },
     },
@@ -370,11 +308,28 @@
     created () {
       setTimeout(() => {
         this.loadingTable = false;
-      }, 3000)
+      }, 3000);
       this.$Message.success('成功切换到这里来了亲');
     },
 
     methods: {
+      ...mapMutations([
+        'increment', // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
+
+        // `mapMutations` 也支持载荷：
+        'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
+      ]),
+      ...mapMutations({
+        add: 'increment' // 将 `this.add()` 映射为 `this.$store.commit('increment')`
+      }),
+
+      testStore () {
+        this.$store.commit('increment');
+      },
+      resetBadge () {
+        this.$store.commit('resetBadge');
+      },
+
       dropDownChange (a, b) {
         debugger;
       },
@@ -391,13 +346,6 @@
       },
       next () {
         this.currentStep++;
-      },
-
-      testStore () {
-        this.$store.commit('increment');
-      },
-      resetBadge(){
-        this.$store.commit('resetBadge');
       },
 
       ok () {

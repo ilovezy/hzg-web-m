@@ -29,13 +29,16 @@
         <Tooltip
             placement="right"
             content="Here is the prompt text">
-          <Button type="warning" @click="openModal">
+          <Button type="warning" @click="testStore">
             hello world
           </Button>
         </Tooltip>
 
         <Button type="success" @click="confirm">
           confirm modal
+        </Button>
+        <Button type="error" @click="resetBadge">
+          reset badge
         </Button>
 
         <Modal
@@ -67,7 +70,7 @@
         </Poptip>
 
         <Poptip trigger="hover" title="Title" content="content contentcontentcontentcontentcontent">
-          <Badge count="1">
+          <Badge :count="badgeNum">
             <Avatar
                 src="https://i.loli.net/2018/07/21/5b529837f0442.jpeg"
                 icon="person"
@@ -245,11 +248,11 @@
                   },
                   on: {
                     click: () => {
-                      this.$Message.success(JSON.stringify(params))
+                      this.$Message.success(JSON.stringify(params));
                     }
                   }
                 }, params.row.name)
-              ])
+              ]);
             }
           },
           // {
@@ -357,12 +360,16 @@
       };
     },
 
-    computed: {},
+    computed: {
+      badgeNum () {
+        return this.$store.state.count;
+      },
+    },
 
     created () {
       setTimeout(() => {
         this.loadingTable = false;
-      }, 3000);
+      }, 3000)
       this.$Message.success('成功切换到这里来了亲');
     },
 
@@ -384,9 +391,14 @@
       next () {
         this.currentStep++;
       },
-      openModal () {
-        this.showModal1 = true;
+
+      testStore () {
+        this.$store.commit('increment');
       },
+      resetBadge(){
+        this.$store.commit('resetBadge');
+      },
+
       ok () {
         this.$Message.info('Clicked ok');
       },

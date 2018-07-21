@@ -16,7 +16,7 @@
             :before-push="beforePush"
             :open-names="openedSubmenuArr"
             :menu-list="menuList">
-          <div slot="top" class="logo-con">
+          <div slot="top" @click="testStore" class="logo-con">
             <img v-show="!shrink" src="../images/logo.jpg" key="max-logo"/>
             <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo"/>
           </div>
@@ -130,6 +130,9 @@
       }
     },
     methods: {
+      testStore(){
+        this.$store.commit('increment', 12);
+      },
       init() {
         let pathArr = util.setCurrentPath(this, this.$route.name);
         this.$store.commit('updateMenulist');

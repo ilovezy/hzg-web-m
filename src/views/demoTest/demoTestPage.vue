@@ -135,7 +135,7 @@
 
     <Row>
       <Col :lg="24">
-        <Table :height="300" stripe :columns="columns1" :data="data1"></Table>
+        <Table width="400" :height="300" stripe :columns="columns1" :data="data1"></Table>
       </Col>
     </Row>
 

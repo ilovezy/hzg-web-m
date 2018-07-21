@@ -13,5 +13,6 @@ window.CONFIG = {
     prod: 'wxdd6b458500d4c224'
   },
 
-  ILoliUploadUrl: 'https://sm.ms' // 好用的图片上传地址
+  ILoliUploadUrl: 'https://sm.ms', // 好用的图片上传地址
+  phone: '+86-13651943930'
 };

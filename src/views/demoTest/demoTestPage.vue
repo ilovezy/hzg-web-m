@@ -362,7 +362,8 @@
 
     computed: {
       badgeNum () {
-        return this.$store.state.count;
+        console.log(this.$store.state)
+        return this.$store.state.demo.count;
       },
     },
 

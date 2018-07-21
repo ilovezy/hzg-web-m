@@ -26,9 +26,14 @@
 
     <Row :gutter="10">
       <Col :lg="24">
-        <Button type="warning" @click="openModal">
-          hello world
-        </Button>
+        <Tooltip
+            placement="right"
+            content="Here is the prompt text">
+          <Button type="warning" @click="openModal">
+            hello world
+          </Button>
+        </Tooltip>
+
         <Button type="success" @click="confirm">
           confirm modal
         </Button>
@@ -117,7 +122,7 @@
       </Col>
 
       <Col>
-        <Dropdown>
+        <Dropdown @on-click="dropDownChange">
           <a href="javascript:void(0)">
             {{dropdownValue}}
             <Icon type="arrow-down-b"></Icon>
@@ -138,7 +143,7 @@
         <h1>pageNo: {{pageNo}}</h1>
         <Table size="small" :loading="loadingTable" :height="300" stripe :columns="columns1" :data="data1">
           <Page slot="footer"
-                style="float: right; margin-top: 7px; margin-right: 15px"
+                style="float: right; margin-right: 15px"
                 :total="31"
                 @on-change="changePage"
                 show-total></Page>
@@ -149,8 +154,37 @@
         <Select multiple v-model="model1" style="width:200px">
           <Option v-for="item in cityList"
                   :value="item.value"
-                  :key="item.value">{{ item.label }}</Option>
+                  :key="item.value">{{ item.label }}
+          </Option>
         </Select>
+      </Col>
+
+      <Col :lg="24">
+        <AutoComplete
+            v-model="value1"
+            :data="autocompleteArr"
+            @on-search="handleSearch1"
+            placeholder="input here"
+            style="width:200px"></AutoComplete>
+
+      </Col>
+      <Col :lg="24">
+        <Radio v-model="single">Radio</Radio>
+
+        <RadioGroup v-model="phone" vertical type="button">
+          <Radio label="apple">
+            <Icon type="social-apple"></Icon>
+            <span>Apple</span>
+          </Radio>
+          <Radio label="android">
+            <Icon type="social-android"></Icon>
+            <span>Android</span>
+          </Radio>
+          <Radio label="windows">
+            <Icon type="social-windows"></Icon>
+            <span>Windows</span>
+          </Radio>
+        </RadioGroup>
       </Col>
     </Row>
 
@@ -163,11 +197,14 @@
     components: {},
     data () {
       return {
+        phone: '',
+        single: false,
+        value1: '',
+        autocompleteArr: ['xfasf', 'bb', '好', '和房东方奇偶啊'],
         loadingTable: true,
         pageNo: 0,
         dropdownValue: '下拉菜单',
         currentStep: 0,
-        value1: 1,
         showModal1: false,
         cityList: [
           {
@@ -200,9 +237,27 @@
           {
             title: 'Name',
             key: 'name',
-            width: 200,
-            fixed: 'left'
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success'
+                  },
+                  on: {
+                    click: () => {
+                      this.$Message.success(JSON.stringify(params))
+                    }
+                  }
+                }, params.row.name)
+              ])
+            }
           },
+          // {
+          //   title: 'Name',
+          //   key: 'name',
+          //   width: 200,
+          //   fixed: 'left'
+          // },
           {
             title: 'Age',
             key: 'age'
@@ -312,6 +367,17 @@
     },
 
     methods: {
+      dropDownChange (a, b) {
+        debugger;
+      },
+
+      handleSearch1 (value) {
+        // this.data1 = !value ? [] : [
+        //   value,
+        //   value + value,
+        //   value + value + value
+        // ];
+      },
       changePage (pageNo) {
         this.pageNo = pageNo;
       },

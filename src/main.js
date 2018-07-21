@@ -10,9 +10,9 @@ import VueI18n from 'vue-i18n';
 import util from './libs/util';
 import AXIOS from './global/AXIOS';
 
-moment.locale('zh_cn');
 window.moment = moment;
 window._ = _;
+moment.locale('zh_cn');
 
 Vue.use(VueI18n);
 Vue.use(iView);

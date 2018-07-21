@@ -11,5 +11,7 @@ window.CONFIG = {
     dev: 'wx3ea60e78ddfa277e',
     rc: 'wx5c5a1fb71ecab7bc',
     prod: 'wxdd6b458500d4c224'
-  }
+  },
+
+  ILoliUploadUrl: 'https://sm.ms' // 好用的图片上传地址
 };

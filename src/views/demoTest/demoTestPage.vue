@@ -6,6 +6,19 @@
     margin-top: 20px;
     margin-bottom: 20px;
   }
+
+  .ivu-carousel-item {
+    background: #70c6fb;
+    color: #fff;
+    font-size: 20px;
+    padding: 15px;
+  }
+
+  .fuck1 {
+    &.ivu-carousel-item {
+      background: red;
+    }
+  }
 </style>
 
 <template>
@@ -22,8 +35,6 @@
         <Modal
             v-model="showModal1"
             title="Common Modal dialog box title"
-
-            :mask-closable="false"
             :closable="false"
             @on-ok="ok"
             @on-cancel="cancel">
@@ -38,6 +49,54 @@
     <hr>
     <Row :gutter="10">
       <Col :lg="24">
+        <Carousel v-model="value1"
+                  loop
+                  :height="100"
+                  autoplay
+                  radius-dot
+                  :autoplay-speed="10000">
+          <CarouselItem class="fuck1">
+            <div class="demo-carousel">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur cumque error fuga inventore
+              ipsa nihil odio perspiciatis soluta. Quae!
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="demo-carousel">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur cumque error fuga inventore
+              ipsa nihil odio perspiciatis soluta. Quae!
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="demo-carousel">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur cumque error fuga inventore
+              ipsa nihil odio perspiciatis soluta. Quae!
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="demo-carousel">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur cumque error fuga inventore
+              ipsa nihil odio perspiciatis soluta. Quae!
+            </div>
+          </CarouselItem>
+        </Carousel>
+      </Col>
+    </Row>
+
+    <hr>
+    <Row :gutter="10">
+      <Col :lg="24" offset="8">
+        <Poptip trigger="hover" title="Title" content="content contentcontentcontentcontentcontent">
+          <Button>Hover</Button>
+        </Poptip>
+
+        <Poptip trigger="hover" title="Title" content="content contentcontentcontentcontentcontent">
+          <Avatar
+              src="https://i.loli.net/2018/07/21/5b529837f0442.jpeg"
+              icon="person"
+              size="large"/>
+        </Poptip>
+
       </Col>
     </Row>
 
@@ -50,6 +109,7 @@
     components: {},
     data () {
       return {
+        value1: 1,
         showModal1: false,
 
         toDoList: [
@@ -72,7 +132,13 @@
 
       };
     },
+
     computed: {},
+
+    created () {
+      this.$Message.success('成功切换到这里来了亲');
+    },
+
     methods: {
       openModal () {
         this.showModal1 = true;

@@ -9,10 +9,12 @@ import 'iview/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
 import AXIOS from './global/AXIOS';
+import USER from './global/USER';
 import IviewSet from './global/IviewSet';
 
 window.moment = moment;
 window._ = _;
+window.USER = USER;
 moment.locale('zh_cn');
 
 Vue.use(VueI18n);

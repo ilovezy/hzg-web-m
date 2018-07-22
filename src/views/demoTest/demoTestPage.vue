@@ -327,7 +327,8 @@
         this.$store.commit('increment');
       },
       resetBadge () {
-        this.$store.commit('resetBadge');
+        // this.$store.commit('resetBadge');
+        this.$store.dispatch('resetBadge')
       },
 
       dropDownChange (a, b) {

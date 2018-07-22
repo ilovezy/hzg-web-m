@@ -82,6 +82,21 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
   {
+    path: '/basicData',
+    icon: 'key',
+    name: 'basicData',
+    title: '第一次axios数据获取',
+    component: Main,
+    children: [
+      {
+        path: 'index',
+        title: '第一次axios数据获取',
+        name: 'basicData_index',
+        component: () => import('@/views/demoTest/basicDataPage.vue')
+      }
+    ]
+  },
+  {
     path: '/demoTest',
     icon: 'key',
     name: 'demoTest',

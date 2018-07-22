@@ -46,7 +46,7 @@
             <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
               <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
                 <a href="javascript:void(0)">
-                  <span class="main-user-name">{{ userName }}</span>
+                  <span class="main-user-name">{{ userName }} {{doubleCount}}</span>
                   <Icon type="arrow-down-b"></Icon>
                 </a>
                 <DropdownMenu slot="list">
@@ -83,6 +83,7 @@
   import Cookies from 'js-cookie';
   import util from '@/libs/util.js';
   import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -104,6 +105,10 @@
       };
     },
     computed: {
+      ...mapGetters(['doubleCount']),
+      // doubleCount(){
+      //   return this.$store.getters.doubleCount;
+      // },
       menuList() {
         return this.$store.state.app.menuList;
       },
@@ -139,7 +144,7 @@
         if (pathArr.length >= 2) {
           this.$store.commit('addOpenSubmenu', pathArr[1].name);
         }
-        this.userName = Cookies.get('user');
+        this.userName = USER.getLoginName();
         let messageCount = 3;
         this.messageCount = messageCount.toString();
         this.checkTag(this.$route.name);
@@ -189,7 +194,7 @@
       },
       scrollBarResize: function() {
       // scrollBarResize() {
-        this.$refs.scrollBar.resize();
+      //   this.$refs.scrollBar.resize();
       }
     },
     watch: {

@@ -14,5 +14,9 @@ window.CONFIG = {
   },
 
   ILoliUploadUrl: 'https://sm.ms', // 好用的图片上传地址
-  phone: '+86-13651943930'
+  phone: '+86-13651943930',
+  defaultUser: {
+    loginName: 'admin',
+    password: '1qaz2wsx'
+  }
 };

@@ -84,25 +84,32 @@
         self.$refs.loginForm.validate((valid) => {
           if (valid) {
             self.showBtnLoading = true;
-            Cookies.set('user', this.form.loginName);
-            Cookies.set('password', this.form.password);
-
             this.$store.commit('setAvator', 'http://image.xiaomaiketang.com/xm/avatar1520488901594');
             let param = this.form;
             AXIOS.post('/security/token', param).then((res) => {
               self.showBtnLoading = false
+
+              let token = res.token || ''
+              if(token){
+                self.$Message.success('登录成功！')
+
+                USER.setToken(token)
+                USER.setLoginName(self.form.loginName)
+                USER.setPassword(this.form.password)
+
+                if (this.form.loginName === 'admin') {
+                  Cookies.set('access', 0);
+                } else {
+                  Cookies.set('access', 1);
+                }
+                self.$router.push({
+                  name: 'home_index'
+                })
+              }
             }, (err) => {
               self.showBtnLoading = false
             })
 
-            // if (this.form.loginName === 'iview_admin') {
-            //   Cookies.set('access', 0);
-            // } else {
-            //   Cookies.set('access', 1);
-            // }
-            // this.$router.push({
-            //   name: 'home_index'
-            // });
           }
         });
       }, 1000, true)

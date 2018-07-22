@@ -86,6 +86,10 @@
             self.showBtnLoading = true;
             this.$store.commit('setAvator', 'http://image.xiaomaiketang.com/xm/avatar1520488901594');
             let param = this.form;
+
+            USER.setLoginName(self.form.loginName)
+            USER.setPassword(this.form.password)
+
             AXIOS.post('/security/token', param).then((res) => {
               self.showBtnLoading = false
 

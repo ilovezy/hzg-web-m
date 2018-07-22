@@ -4,6 +4,8 @@ window.CONFIG = {
     production: 'http://ep2.viphk1.ngrok.org'
   },
 
+  serverDocUrl: 'http://ep2.viphk1.ngrok.org/swagger-ui.html',
+
   version: 'v3.15.0',
   isWindows: navigator.userAgent.indexOf("Windows", 0) != -1 || navigator.userAgent.indexOf('Android') > -1 ||navigator.userAgent.indexOf('Linux') > -1,
   // 微信appId

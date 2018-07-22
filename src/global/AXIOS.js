@@ -3,8 +3,10 @@ import env from '../../build/env'
 import '../global/config'
 import {router} from '../router/index'
 import {Notice, Message} from 'iview'
+import USER from './USER'
 
 let ajaxUrl = CONFIG.server[env] || 'https://debug.url.com'
+// axios.defaults.headers.common['Authorization'] = 'Bearer ' + USER.getToken()
 
 let instance = axios.create({
   baseURL: ajaxUrl,
@@ -12,6 +14,7 @@ let instance = axios.create({
 })
 
 instance.interceptors.request.use(config => {
+  config.headers['Authorization'] = 'Bearer ' + USER.getToken()
   return config
 }, err => {
   Message.error({
@@ -26,9 +29,11 @@ instance.interceptors.response.use(res => {
   if (data.isSuccess) {
     return data.result || {}
   } else {
-    Message.error({
-      content: data.errorDescription
-    })
+    if(data.errorDescription){
+      Message.error({
+        content: data.errorDescription
+      })
+    }
     return data
   }
 }, err => {

@@ -51,7 +51,16 @@
 
     methods: {
       getList(){
-        AXIOS.post('', {}).then((res) => {
+        // AXIOS.post('http://www.wwtliu.com/sxtstu/blueberrypai/getChengpinDetails.php', {}).then((res) => {
+        //   debugger
+        // })
+        AXIOS.get('/auth/sysRole/index', {
+          page: 0,
+          size: 5,
+          name: '',
+          crTimeStart: '',
+          crTimeEnd: ''
+        }).then((res) => {
           debugger
         })
       }

@@ -22,7 +22,6 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(res => {
   let data = res.data || {}
-  debugger
 
   if (data.isSuccess) {
     return data.result || {}
@@ -33,52 +32,56 @@ instance.interceptors.response.use(res => {
     return data
   }
 }, err => {
-  debugger
-  let response = err.response || {}
-  let data = response.data || {}
-  if (data.isSuccess) {
-    if (response.status == 504 || response.status == 404) {
-      Message.error({
-        content: '服务器被吃了⊙﹏⊙∥'
-      })
-    } else if (response.status == 403) {
-      Message.error({
-        content: '权限不足,请联系管理员!'
-      })
-    } else {
-      Message.error({
-        content: response.errorDescription || '出现未知错误，请稍后重试'
-      })
-    }
-
-    return Promise.resolve(data);
-  } else {
-    if (data.error == "ERROR_ACCESS_NEED_AUTH") {
-      Message.error({
-        content: '请先登录'
-      })
-      USER.logout()
-      router.push({
-        name: 'login'
-      })
-      return Promise.reject()
-    } else {
-      Message.error({
-        content: data.errorDescription
-      })
+  if (err.response) {
+    let response = err.response || {}
+    let data = response.data || {}
+    if (data.isSuccess) {
+      if (response.status == 504 || response.status == 404) {
+        Message.error({
+          content: '服务器被吃了⊙﹏⊙∥'
+        })
+      } else if (response.status == 403) {
+        Message.error({
+          content: '权限不足,请联系管理员!'
+        })
+      } else {
+        Message.error({
+          content: response.errorDescription || '出现未知错误，请稍后重试'
+        })
+      }
 
       return Promise.resolve(data);
-    }
-  }
+    } else {
+      if (data.error == "ERROR_ACCESS_NEED_AUTH") {
+        Message.error({
+          content: '请先登录'
+        })
+        USER.logout()
+        router.push({
+          name: 'login'
+        })
+        return Promise.reject()
+      } else {
+        Message.error({
+          content: data.errorDescription
+        })
 
+        return Promise.resolve(data);
+      }
+    }
+  } else {
+    Message.error({
+      content: '404错误，后台没找到！'
+    })
+  }
 })
 
 const postRequest = (url, params) => {
-  // if (!url) {
-  //   Message.error({
-  //     content: '请求地址为空'
-  //   })
-  // } else {
+  if (!url) {
+    Message.error({
+      content: '请求地址为空'
+    })
+  } else {
     return instance({
       method: 'post',
       url,
@@ -94,7 +97,7 @@ const postRequest = (url, params) => {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
       }
     })
-  // }
+  }
 }
 
 const uploadFileRequest = (url, params) => {

@@ -16,7 +16,6 @@ const RouterConfig = {
 export const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-  debugger
   iView.LoadingBar.start();
   Util.title(to.meta.title, router.app);
   if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
